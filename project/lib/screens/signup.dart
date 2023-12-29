@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:project/models/usermodel.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
   SignUp({super.key});
+
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
+  final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+
+  void dispose() {
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +78,7 @@ class SignUp extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    controller: usernameController,
                     decoration: InputDecoration(
                         hintText: "Username",
                         border: OutlineInputBorder(
@@ -72,6 +90,7 @@ class SignUp extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
                         hintText: "Email",
                         border: OutlineInputBorder(
@@ -83,6 +102,7 @@ class SignUp extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   TextField(
+                    controller: passwordController,
                     decoration: InputDecoration(
                       hintText: "Password",
                       border: OutlineInputBorder(
@@ -101,8 +121,12 @@ class SignUp extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 3, left: 3),
                 child: ElevatedButton(
                   onPressed: () {
+                    final User user = User(
+                        username: usernameController.text,
+                        password: passwordController.text);
                     context.pushNamed('signin');
-                    print("GGEZ");
+                    print("ggez");
+                    print(user);
                   },
                   child: const Text(
                     "Sign up",
