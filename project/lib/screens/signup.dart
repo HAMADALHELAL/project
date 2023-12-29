@@ -116,8 +116,6 @@ class _SignUpState extends State<SignUp> {
                         .then((token) {
                       if (token.isNotEmpty) {
                         context.pushNamed("signin");
-                      } else {
-                        print("ggez");
                       }
                     });
                   },

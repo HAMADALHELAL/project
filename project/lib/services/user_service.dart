@@ -6,16 +6,25 @@ import 'package:project/services/client.dart';
 class UserService {
   Future<String> signup({required User user}) async {
     try {
-      if (user.username.isNotEmpty && user.password.isNotEmpty) {
-        final Response response =
-            await ApiClient.post("/signup", data: user.toJson());
+      final Response response =
+          await ApiClient.post("/signup", data: user.toJson());
+      print("Signup Response: ${response.data}");
 
-        Token tokenModle = Token.fromJson(response.data);
-        return tokenModle.token.toString();
-      }
-      return "";
+      Token tokenModel = Token.fromJson(response.data);
+      return tokenModel.token.toString();
     } catch (e) {
-      print("GGEZ");
+      print("Signup Error: $e");
+      throw e.toString();
+    }
+  }
+
+  Future signin({required User user}) async {
+    try {
+      final Response response =
+          await ApiClient.post("/signin", data: user.toJson());
+      Token tokenModel = Token.fromJson(response.data);
+      return tokenModel.token;
+    } catch (e) {
       throw e.toString();
     }
   }

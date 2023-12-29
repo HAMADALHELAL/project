@@ -13,8 +13,11 @@ class ApiClient {
   static Future<void> addAuthToken() async {
     SharedPreferences shared = await SharedPreferences.getInstance();
     String? token = shared.getString('token');
-
+    print('Token before setting in headers: $token');
     if (token != null) {
+      print(
+          'Token after setting in headers: ${dio.options.headers['Authorization']}');
+
       dio.options.headers['Authorization'] = 'Bearer $token';
     }
   }
@@ -46,8 +49,4 @@ class ApiClient {
       throw error.toString();
     }
   }
-}
-
-class NamedRoutes {
-  static final String login = "signin";
 }
