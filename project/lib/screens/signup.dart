@@ -37,6 +37,29 @@ class SignUp extends StatelessWidget {
               ),
               Column(
                 children: <Widget>[
+                  // Add a place for the user to insert their profile image
+                  InkWell(
+                    onTap: () {
+                      // Implement image picker logic here
+                      print("Pick Image");
+                    },
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 60,
+                          backgroundImage:
+                              AssetImage('assets/placeholder_image.png'),
+                        ),
+                        Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 40,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   TextField(
                     decoration: InputDecoration(
                         hintText: "Username",
@@ -72,37 +95,26 @@ class SignUp extends StatelessWidget {
                     obscureText: true,
                   ),
                   const SizedBox(height: 20),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: "Confirm Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(18),
-                          borderSide: BorderSide.none),
-                      fillColor: Colors.purple.withOpacity(0.1),
-                      filled: true,
-                      prefixIcon: const Icon(Icons.password),
-                    ),
-                    obscureText: true,
-                  ),
                 ],
               ),
               Container(
-                  padding: const EdgeInsets.only(top: 3, left: 3),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      context.pushNamed('signin');
-                      print("GGEZ");
-                    },
-                    child: const Text(
-                      "Sign up",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor: Colors.purple,
-                    ),
-                  )),
+                padding: const EdgeInsets.only(top: 3, left: 3),
+                child: ElevatedButton(
+                  onPressed: () {
+                    context.pushNamed('signin');
+                    print("GGEZ");
+                  },
+                  child: const Text(
+                    "Sign up",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shape: const StadiumBorder(),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    backgroundColor: Colors.purple,
+                  ),
+                ),
+              ),
               const Center(child: Text("Or")),
               Container(
                 height: 45,

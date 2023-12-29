@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:project/screens/profile.dart';
 import 'package:project/screens/signin.dart';
 import 'package:project/screens/signup.dart';
 
@@ -17,6 +18,11 @@ final _router = GoRouter(routes: [
     path: "/signin",
     name: 'signin',
     builder: (context, state) => SignIn(),
+  ),
+  GoRoute(
+    path: "/userprofile",
+    name: 'userprofile',
+    builder: (context, state) => UserProfile(),
   ),
 ]);
 

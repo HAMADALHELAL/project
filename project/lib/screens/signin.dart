@@ -49,7 +49,9 @@ class SignIn extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.goNamed('userprofile');
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -57,7 +59,7 @@ class SignIn extends StatelessWidget {
                   ),
                   child: const Text(
                     "Login",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 )
               ],
@@ -75,7 +77,7 @@ class SignIn extends StatelessWidget {
                 const Text("Dont have an account? "),
                 TextButton(
                     onPressed: () {
-                      context.pushNamed("signup");
+                      context.goNamed("signup");
                     },
                     child: const Text(
                       "Sign Up",
