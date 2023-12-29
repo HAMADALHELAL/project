@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project/models/usermodel.dart';
+import 'package:project/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({super.key});
@@ -12,11 +14,9 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final passwordController = TextEditingController();
   final usernameController = TextEditingController();
-  final emailController = TextEditingController();
 
   void dispose() {
     usernameController.dispose();
-    emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -65,8 +65,6 @@ class _SignUpState extends State<SignUp> {
                       children: [
                         CircleAvatar(
                           radius: 60,
-                          backgroundImage:
-                              AssetImage('assets/placeholder_image.png'),
                         ),
                         Icon(
                           Icons.add,
@@ -87,18 +85,6 @@ class _SignUpState extends State<SignUp> {
                         fillColor: Colors.purple.withOpacity(0.1),
                         filled: true,
                         prefixIcon: const Icon(Icons.person)),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                        hintText: "Email",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(18),
-                            borderSide: BorderSide.none),
-                        fillColor: Colors.purple.withOpacity(0.1),
-                        filled: true,
-                        prefixIcon: const Icon(Icons.email)),
                   ),
                   const SizedBox(height: 20),
                   TextField(
@@ -124,9 +110,16 @@ class _SignUpState extends State<SignUp> {
                     final User user = User(
                         username: usernameController.text,
                         password: passwordController.text);
-                    context.pushNamed('signin');
-                    print("ggez");
-                    print(user);
+                    context
+                        .read<UserProvider>()
+                        .signup(user: user)
+                        .then((token) {
+                      if (token.isNotEmpty) {
+                        context.pushNamed("signin");
+                      } else {
+                        print("ggez");
+                      }
+                    });
                   },
                   child: const Text(
                     "Sign up",
