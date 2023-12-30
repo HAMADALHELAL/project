@@ -28,7 +28,9 @@ final _router = GoRouter(routes: [
   GoRoute(
     path: "/userprofile",
     name: 'userprofile',
-    builder: (context, state) => UserProfile(),
+    builder: (context, state) => UserProfile(
+      name: 'username',
+    ),
   ),
 ]);
 

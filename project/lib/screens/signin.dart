@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:project/models/usermodel.dart';
+import 'package:project/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
-class SignIn extends StatelessWidget {
+class SignIn extends StatefulWidget {
   SignIn({super.key});
 
   @override
+  State<SignIn> createState() => _SignInState();
+}
+
+class _SignInState extends State<SignIn> {
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
@@ -25,6 +41,7 @@ class SignIn extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 TextField(
+                  controller: _usernameController,
                   decoration: InputDecoration(
                       hintText: "Username",
                       border: OutlineInputBorder(
@@ -36,6 +53,7 @@ class SignIn extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 TextField(
+                  controller: _passwordController,
                   decoration: InputDecoration(
                     hintText: "Password",
                     border: OutlineInputBorder(
@@ -50,7 +68,17 @@ class SignIn extends StatelessWidget {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    context.goNamed('userprofile');
+                    final User user = User(
+                        username: _usernameController.text,
+                        password: _passwordController.text);
+                    context
+                        .read<UserProvider>()
+                        .signin(user: user)
+                        .then((token) {
+                      if (token.isNotEmpty) {
+                        context.goNamed('userprofile', extra: user);
+                      }
+                    });
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),

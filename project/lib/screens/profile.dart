@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatelessWidget {
+  final String name;
+  // Add more properties as needed
+
+  // Constructor to receive user data
+  UserProfile({
+    required this.name,
+    // Add more parameters as needed
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,12 +28,7 @@ class UserProfile extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                'Name',
-                style: TextStyle(fontSize: 18),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Email',
+                'Name: $name',
                 style: TextStyle(fontSize: 18),
               ),
               // Add more user information widgets as needed
