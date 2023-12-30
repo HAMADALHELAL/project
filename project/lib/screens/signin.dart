@@ -76,6 +76,7 @@ class _SignInState extends State<SignIn> {
                         .signin(user: user)
                         .then((token) {
                       if (token.isNotEmpty) {
+                        print("gg");
                         context.goNamed('userprofile', extra: user);
                       }
                     });
