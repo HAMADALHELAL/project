@@ -77,7 +77,7 @@ class _SignInState extends State<SignIn> {
                         .then((token) {
                       if (token.isNotEmpty) {
                         print("gg");
-                        context.goNamed('userprofile', extra: user);
+                        context.goNamed('homepage', extra: user);
                       }
                     });
                   },

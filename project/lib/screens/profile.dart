@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:project/models/usermodel.dart';
 
 class UserProfile extends StatelessWidget {
-  final String name;
-  // Add more properties as needed
+  final User user;
 
-  // Constructor to receive user data
   UserProfile({
-    required this.name,
-    // Add more parameters as needed
+    required this.user,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Profile'),
+        title: Center(child: Text('User Profile')),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
@@ -28,10 +28,39 @@ class UserProfile extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                'Name: $name',
+                'Name: ${user.username} ',
                 style: TextStyle(fontSize: 18),
               ),
-              // Add more user information widgets as needed
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  // Add logic for the first button
+                  context.goNamed("homepage", extra: user);
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  backgroundColor: Colors.blue,
+                ),
+                child: Text(
+                  'Home Page',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {
+                  // Add logic for the second button
+                  context.goNamed("signup");
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  backgroundColor: Colors.green,
+                ),
+                child: Text(
+                  'logout',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
             ],
           ),
         ),
