@@ -24,6 +24,10 @@ class HomeCard extends StatelessWidget {
             // context.read<MeditationProvider>().getMeditation();
           } else if (title == "Exercises") {
             context.pushNamed("excercises");
+          } else if (title == "Tips") {
+            context.pushNamed("tips");
+          } else if (title == "Music") {
+            context.pushNamed("music");
           }
         },
         child: Padding(
