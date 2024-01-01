@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:project/models/usermodel.dart';
+import 'package:project/providers/exercises_provider.dart';
 import 'package:project/providers/meditation_provider.dart';
 import 'package:project/providers/user_provider.dart';
+import 'package:project/screens/Excercises.dart';
 import 'package:project/screens/homepage.dart';
 import 'package:project/screens/meditation.dart';
 import 'package:project/screens/profile.dart';
@@ -17,6 +19,9 @@ void main() {
     ),
     ChangeNotifierProvider(
       create: (context) => MeditationProvider(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => ExercisesProvider(),
     ),
   ], child: MyApp()));
 }
@@ -50,6 +55,11 @@ final _router = GoRouter(routes: [
     path: "/meditation",
     name: 'meditation',
     builder: (context, state) => MeditationPage(),
+  ),
+  GoRoute(
+    path: "/excercises",
+    name: 'excercises',
+    builder: (context, state) => ExercisesPage(),
   ),
 ]);
 

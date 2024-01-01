@@ -5,7 +5,7 @@ import 'package:project/widgets/home_card.dart';
 
 class HomePage extends StatelessWidget {
   final User user;
-  const HomePage({Key? key, required this.user});
+  HomePage({Key? key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
         padding: EdgeInsets.all(16),
         children: [
           HomeCard(title: 'Tips', icon: Icons.lightbulb, color: Colors.blue),
-          HomeCard(title: 'Yoga Videos', icon: Icons.spa, color: Colors.green),
+          HomeCard(title: 'Exercises', icon: Icons.spa, color: Colors.green),
           HomeCard(
               title: 'Music', icon: Icons.music_note, color: Colors.orange),
           HomeCard(

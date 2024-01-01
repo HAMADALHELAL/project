@@ -23,9 +23,9 @@ class UserProfile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                radius: 60,
-                backgroundImage: NetworkImage("gg"),
-              ),
+                  radius: 60,
+                  backgroundImage: NetworkImage(
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/GitHub_Invertocat_Logo.svg/1200px-GitHub_Invertocat_Logo.svg.png")),
               SizedBox(height: 20),
               Text(
                 'Name: ${user.username} ',
