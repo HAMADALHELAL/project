@@ -33,5 +33,14 @@ class TipsServices {
     }
   }
 
-  deleteTip() {}
+  deleteTip(int? id) async {
+    try {
+      final Response response = await ApiClient.delete(
+        "/tips/$id",
+      );
+      return response;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
 }

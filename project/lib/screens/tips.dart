@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:project/models/tips.dart';
 import 'package:project/providers/tips_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +15,7 @@ class TipsPage extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: context.read<TipsProvider>().getTips(),
-        builder: (context, AsyncSnapshot snapshot) {
+        builder: (context, AsyncSnapshot<List<TipsData>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
@@ -22,8 +23,9 @@ class TipsPage extends StatelessWidget {
           }
 
           if (snapshot.hasError || snapshot.data == null) {
-            return Center(child: Text(' $snapshot'));
+            return Center(child: Text('${snapshot.error}'));
           }
+
           return Consumer<TipsProvider>(
             builder: (context, value, child) {
               return ListView.builder(
@@ -33,6 +35,13 @@ class TipsPage extends StatelessWidget {
                     child: ListTile(
                       title: Text(value.tipsList[index].text.toString()),
                       subtitle: Text(value.tipsList[index].author.toString()),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          TipsData mytips = value.tipsList[index];
+                          context.read<TipsProvider>().deleteTip(mytips.id);
+                        },
+                      ),
                     ),
                   );
                 },

@@ -1,3 +1,5 @@
+// tips_provider.dart
+
 import 'package:flutter/material.dart';
 import 'package:project/models/tips.dart';
 import 'package:project/services/tips_service.dart';
@@ -22,6 +24,17 @@ class TipsProvider extends ChangeNotifier {
       await _tipsServices.postTips(title);
       await getTips();
     } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  Future<void> deleteTip(int? id) async {
+    try {
+      await _tipsServices.deleteTip(id);
+      tipsList.removeWhere((tip) => tip.id == id);
+      notifyListeners();
+    } catch (e) {
+      print('errrrrrrrrrrrror ...... $e');
       throw e.toString();
     }
   }
