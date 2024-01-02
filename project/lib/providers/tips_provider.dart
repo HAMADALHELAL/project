@@ -34,8 +34,14 @@ class TipsProvider extends ChangeNotifier {
       tipsList.removeWhere((tip) => tip.id == id);
       notifyListeners();
     } catch (e) {
-      print('errrrrrrrrrrrror ...... $e');
       throw e.toString();
     }
+  }
+
+  // ... (other methods and properties remain unchanged)
+
+  void reverseTipsList() {
+    tipsList = tipsList.reversed.toList();
+    notifyListeners();
   }
 }
