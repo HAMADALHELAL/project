@@ -25,9 +25,7 @@ class _TipsPageState extends State<TipsPage> {
             onPressed: () async {
               // Reverse the order of the tipsList
               context.read<TipsProvider>().reverseTipsList();
-              setState(() {
-                // Refresh the widget tree
-              });
+              // No need to call setState here
             },
           ),
         ],
@@ -50,30 +48,51 @@ class _TipsPageState extends State<TipsPage> {
                 ),
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemCount: filteredTips.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    title: Text(filteredTips[index].text?.toString() ?? ''),
-                    subtitle:
-                        Text(filteredTips[index].author?.toString() ?? ''),
-                    trailing: IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () async {
-                        TipsData mytips = filteredTips[index];
-                        await context.read<TipsProvider>().deleteTip(mytips.id);
-                        setState(() {
-                          // Refresh the widget tree
-                        });
-                      },
-                    ),
-                  ),
-                );
-              },
-            ),
+            FutureBuilder(
+                future: context.read<TipsProvider>().getTips(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (snapshot.hasError || snapshot.data == null) {
+                    return Center(child: Text(' $snapshot'));
+                  }
+                  return Consumer<TipsProvider>(
+                    builder: (context, tipsProvider, child) {
+                      List<TipsData> filteredTips =
+                          getFilteredTips(tipsProvider.tipsList);
+
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: filteredTips.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            child: ListTile(
+                              title: Text(
+                                  filteredTips[index].text?.toString() ?? ''),
+                              subtitle: Text(
+                                  filteredTips[index].author?.toString() ?? ''),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete),
+                                onPressed: () async {
+                                  TipsData mytips = filteredTips[index];
+                                  await context
+                                      .read<TipsProvider>()
+                                      .deleteTip(mytips.id);
+                                  // No need to call setState here
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                }),
           ],
         ),
       ),
@@ -87,8 +106,7 @@ class _TipsPageState extends State<TipsPage> {
     );
   }
 
-  List<TipsData> get filteredTips {
-    List<TipsData> allTips = context.read<TipsProvider>().tipsList;
+  List<TipsData> getFilteredTips(List<TipsData> allTips) {
     return allTips
         .where((tip) =>
             (tip.text?.toLowerCase() ?? '')
